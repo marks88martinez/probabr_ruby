@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Buyer name:</strong>
+  <%= @purchase.buyer_name %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @purchase.email %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @purchase.status %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @purchase.user.name %>
+</p>
+
+<div class="my-3 p-3 bg-body rounded shadow-sm" style="width: 600px;">
+    <h6 class="border-bottom pb-2 mb-0">Recent Notes</h6>
+
+    <% @purchase.notes.each do |note| %>
+       
+    <div class="d-flex text-muted pt-3">
+
+      <p class="pb-3 mb-0 small lh-sm border-bottom">
+        <strong class="d-block text-gray-dark p-1">  #  <%= note.name%></strong>
+          <%= note.note%>
+      </p>
+    </div>
+    <% end %>
+    
+   
+  </div>
+
+
+
+<%= link_to 'Edit', edit_purchase_path(@purchase), class: 'btn btn-primary', style:'color: white' %> |
+<%= link_to 'Back', purchases_path , class: 'btn btn-primary', style:'color: white'%>

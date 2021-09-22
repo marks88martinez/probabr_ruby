@@ -1,0 +1,52 @@
+<%= form_with(model: purchase) do |form| %>
+  <% if purchase.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(purchase.errors.count, "error") %> prohibited this purchase from being saved:</h2>
+
+      <ul>
+        <% purchase.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  
+
+  <div class="field">
+    <%= form.label :buyer_name , class: 'form-label' %>
+    <%= form.text_field :buyer_name , class: 'form-control' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :email, class: 'form-label'  %>
+    <%= form.text_field :email,  class: 'form-control'  %>
+  </div>
+
+ 
+
+  <div class="field">
+    <%= form.label :status,  class: 'form-label' %>
+    <%= form.select :status, Purchase.statuses.keys, {}, {class: "form-control"} %>
+  </div>
+
+ 
+    <h2> Notes #</h2>
+    <div id="notes">
+      
+      <%= form.fields_for :notes do |note_fields| %>
+         <%= render partial: "note_fields", locals:{ f: note_fields }%>
+      <%end%>
+      <br>
+          <%=link_to_add_association('+ Add Notes',form, :notes ,class: "btn btn-info", style: 'color: white',  remote: true)%>
+  </div>
+      <br>
+                         
+  
+
+
+  <div class="actions">
+    <!-- <%= form.submit %> -->
+    <button type="submit" class="btn btn-success">Guardar</button>
+  </div>
+<% end %>

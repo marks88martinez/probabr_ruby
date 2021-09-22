@@ -1,0 +1,61 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Purchases</h1>
+
+    <%=form_tag purchases_path , method: :get do%>
+           
+      <div class="input-group input-group" style="width: 300px; padding-button:5px;">
+        <%= text_field_tag(:search, params[:search], :class => "form-control" , placeholder: "Search" ) %>
+        
+        <div class="input-group-btn"  style=" padding-button:5px;">
+            <%= submit_tag("buscar",class:"btn btn-primary " ) do %>  
+            <% end %>
+        </div>
+      </div>
+    <% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Buyer name</th>
+      <th>Email</th>
+      <th>Status</th>
+      <th>User</th>
+      <th>Views</th>
+      <th colspan="3"></th>
+      <th>Update</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @purchases.each do |purchase| %>
+      <tr>
+        <td><%= purchase.buyer_name %></td>
+        <td><%= purchase.email %></td>
+        <td><%= purchase.status %></td>
+        <td><%= purchase.user.name %></td>
+        <td><%= purchase.impressionist_count %></td>
+
+        <% if can? :show, Purchase %> 
+        <td><%= link_to 'Show', purchase , class: 'btn btn-success', style:'color: white'%></td>
+        <% end %>
+        <% if can? :edit, Purchase %> 
+        <td><%= link_to 'Edit', edit_purchase_path(purchase) , class: 'btn btn-warning', style:'color: white'%></td>
+         <% end %>
+        <% if can? :destroy, Purchase %> 
+        <td><%= link_to 'Destroy', purchase, method: :delete, data: { confirm: 'Are you sure?' } , class: 'btn btn-danger', style:'color: white' %></td>
+          <% end %>
+       
+        <td><%= purchase.updated_at.strftime('%d/%m/%Y - %H:%M  ') %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+
+
+<% if can? :create, Purchase %>
+  <%= link_to 'New Purchase', new_purchase_path, class: 'btn btn-success', style:'color: white' %>
+<% end %>

@@ -1,0 +1,58 @@
+<p id="notice"><%= notice %></p>
+
+<%=form_tag users_path , method: :get do%>
+           
+      <div class="input-group input-group" style="width: 300px; padding-button:5px;">
+        <%= text_field_tag(:search, params[:search], :class => "form-control" , placeholder: "Search" ) %>
+        
+        <div class="input-group-btn"  style=" padding-button:5px;">
+            <%= submit_tag("buscar",class:"btn btn-primary " ) do %>  
+            <% end %>
+        </div>
+      </div>
+<% end %>
+
+<h1>Users</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Role</th>
+      <th>Email</th> 
+      <% if can? :edit, User %> 
+      <th colspan="3"></th>
+       <% end %>
+      <th>Update</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.role %></td>
+        <td><%= user.email %></td>
+     
+        <% if can? :edit, User %> 
+        <td><%= link_to 'Show', user, class: 'btn btn-success', style:'color: white' %></td>
+          <% end %>
+        <% if can? :edit, User %> 
+        <td><%= link_to 'Edit', edit_user_path(user), class: 'btn btn-warning', style:'color: white' %></td>
+          <% end %>
+        <% if can? :edit, User %> 
+        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger', style:'color: white' %></td>
+         <% end %>
+       
+         <td><%= user.updated_at.strftime('%d/%m/%Y - %H:%M  ') %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+
+<% if can? :create, User %>
+  <%= link_to 'New User', new_user_path, class: 'btn btn-success', style:'color: white' %>
+<% end %>
